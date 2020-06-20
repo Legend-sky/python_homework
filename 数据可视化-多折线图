@@ -1,0 +1,62 @@
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from pylab import *
+namelist = list(open('name.txt', 'rt', encoding='utf-8'))
+dic = dict()
+dic2015 = dict()
+dic2016 = dict()
+dic2017 = dict()
+dic2018 = dict()
+for name in namelist[1:]:
+    for each in name[1:-1]:
+        if each in dic:
+            dic[each] += 1
+        else:
+            dic[each] = 1
+diclist = list(dic.items())
+diclist.sort(key=lambda e: e[1], reverse=True)
+for i in range(0, 10):
+    for j in range(2015, 2019):
+        exec('dic'+str(j)+'[diclist['+str(i)+'][0]] = 0')
+for i in range(2015, 2019):
+    for name in namelist[(i-2015)*470+1:(i-2014)*470+1]:
+        if i == 2015:
+            for each in name[1:-1]:
+                if each in dic2015:
+                    dic2015[each] += 1
+        elif i == 2016:
+            for each in name[1:-1]:
+                if each in dic2016:
+                    dic2016[each] += 1
+        elif i == 2017:
+            for each in name[1:-1]:
+                if each in dic2017:
+                    dic2017[each] += 1
+        elif i == 2018:
+            for each in name[1:-1]:
+                if each in dic2018:
+                    dic2018[each] += 1
+x = ['2015级', '2016级', '2017级', '2018级']
+y1 = list(dic2015.values())
+y2 = list(dic2016.values())
+y3 = list(dic2017.values())
+y4 = list(dic2018.values())
+for i in range(0, 10):
+    exec('cyz'+str(i)+' = [y1['+str(i)+'], y2['+str(i)+'], y3['+str(i)+'], y4['+str(i)+']]')
+plt.title("常用字变化趋势")
+mpl.rcParams['font.sans-serif'] = ['SimHei']  #设置中文字体
+plt.plot(x, cyz0, color='green', label='宇')
+plt.plot(x, cyz1, color='red', label='文')
+plt.plot(x, cyz2, color='blue', label='杰')
+plt.plot(x, cyz3, color='black', label='鑫')
+plt.plot(x, cyz4, color='lightblue', label='明')
+plt.plot(x, cyz5, color='gray', label='鹏')
+plt.plot(x, cyz6, color='purple', label='浩')
+plt.plot(x, cyz7, color='pink', label='佳')
+plt.plot(x, cyz8, color='Orange', label='凯')
+plt.plot(x, cyz9, color='DarkSlateBlue', label='志')
+plt.legend()  #设置图例（左上角）
+plt.xlabel('年级')
+plt.ylabel('次数')
+plt.show()
+
