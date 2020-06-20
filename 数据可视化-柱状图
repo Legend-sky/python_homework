@@ -1,0 +1,26 @@
+from pylab import *
+namelist = list(open('name.txt', 'rt', encoding='utf-8'))
+lnm = 0
+dic1 = dict()
+for name in namelist[1:]:
+    for each in name[1:-1]:
+        if each in dic1:
+            dic1[each] += 1
+            lnm = lnm + 1
+        else:
+            dic1[each] = 1
+            lnm = lnm+1
+diclist1 = list(dic1.items())
+diclist1.sort(key=lambda e: e[1], reverse=True)
+labels = []
+num_list = []
+for name in diclist1[:10]:
+    labels.append(name[0])
+    num_list.append(round(name[1], 1))
+mpl.rcParams['font.sans-serif'] = ['SimHei']
+fig = plt.figure(figsize=(10,5))
+axes = fig.add_subplot(1, 1, 1)
+axes.bar(range(len(labels)), num_list)
+axes.set_xticks(range(len(labels)))
+axes.set_xticklabels(labels)
+plt.show()
