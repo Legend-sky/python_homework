@@ -1,0 +1,14 @@
+from bs4 import BeautifulSoup
+import requests
+import time
+print('读取自动化学院新闻')
+url = 'http://www.hdu.edu.cn/news/important'
+web_data = requests.get(url)
+web_data.encoding = 'utf-8'
+soup = BeautifulSoup(web_data.text, 'html.parser')
+print(soup)
+for news in soup.select('li'):
+    if news.select('.title') != []:
+        print(str(news.select('.title'))[20:-7])
+timestr = time.strftime("%y/%m/%d\n%H:%M:%S")
+print(timestr)
