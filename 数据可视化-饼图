@@ -1,0 +1,37 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+#注意逆时针
+matplotlib.rcParams['font.sans-serif'] = ['SimHei']
+namelist = list(open('name.txt', 'rt', encoding='utf-8'))
+ln = len(namelist)
+#lnm = 0
+#print('txt len:', ln)
+dic = dict()
+for name in namelist[1:]:
+    dic[name[0]] = dic.get(name[0], 0)+1
+diclist = list(dic.items())
+diclist.sort(key=lambda e: e[1], reverse=True)
+#print('姓氏前5分别是：')
+labels = []
+sizes = []
+k = 0
+for name in diclist[:5]:
+    precent = name[1] / (ln-1) * 100
+    labels.append(name[0])
+    sizes.append(round(precent, 1))
+    k += name[1]
+labels.append('其他姓氏')
+#print(labels)
+sizes.append(round((ln - k) / (ln - 1) * 100))
+colors = ['yellowgreen', 'gold', '#FF0000', 'lightcoral', 'lightblue', 'green']
+explode = (0.05, 0, 0, 0, 0, 0)		#分离
+fig = plt.figure()
+ax = fig.gca()
+ax.pie(sizes, explode=explode, labels=labels, colors=colors,
+
+       autopct='%1.1f%%', shadow=False, startangle=90,
+
+       radius=0.4, center=(0.5, 0.5), frame=True)
+
+plt.show()
